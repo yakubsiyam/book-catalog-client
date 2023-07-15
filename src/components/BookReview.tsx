@@ -3,7 +3,10 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { FiSend } from 'react-icons/fi';
-import { usePostCommentMutation } from '@/redux/features/books/bookApi';
+import {
+  useGetCommentQuery,
+  usePostCommentMutation,
+} from '@/redux/features/books/bookApi';
 
 const dummyComments = [
   'Bhalo na',
@@ -19,8 +22,15 @@ interface IProps {
 export default function BookReview({ id }: IProps) {
   const [inputValue, setInputValue] = useState<string>('');
 
+  const { data } = useGetCommentQuery(id, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 30000,
+  });
+
   const [postComment, { isLoading, isError, isSuccess }] =
     usePostCommentMutation();
+
+  // console.log(postComment);
 
   console.log(isLoading, isError, isSuccess);
 
@@ -29,10 +39,11 @@ export default function BookReview({ id }: IProps) {
 
     const options = {
       id: id,
-      data: { comment: inputValue },
+      data: { comments: inputValue },
     };
 
     postComment(options);
+    console.log(options);
     setInputValue('');
   };
 
@@ -55,7 +66,7 @@ export default function BookReview({ id }: IProps) {
         </Button>
       </form>
       <div className="mt-10">
-        {dummyComments.map((comment, index) => (
+        {data?.data?.comments?.map((comment: string, index: number) => (
           <div key={index} className="flex gap-3 items-center mb-5">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" />

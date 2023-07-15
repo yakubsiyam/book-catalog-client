@@ -16,12 +16,23 @@ const bookApi = api.injectEndpoints({
       }),
       invalidatesTags: ['comments'],
     }),
-    // getComment: builder.query({
-    //   query: (id) => `/comment/${id}`,
-    //   providesTags: ['comments'],
+    // getComment: builder.mutation({
+    //   query: ({ id }) => ({
+    //     url: `book/comment/${id}`,
+    //     method: 'GET',
+    //   }),
+    //   invalidatesTags: ['comments'],
     // }),
+    getComment: builder.query({
+      query: (id) => `book/comment/${id}`,
+      providesTags: ['comments'],
+    }),
   }),
 });
 
-export const { useGetBooksQuery, useSingleBookQuery, usePostCommentMutation } =
-  bookApi;
+export const {
+  useGetBooksQuery,
+  useSingleBookQuery,
+  usePostCommentMutation,
+  useGetCommentQuery,
+} = bookApi;
