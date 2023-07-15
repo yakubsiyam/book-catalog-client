@@ -4,7 +4,7 @@ import Login from '@/pages/Login';
 import NotFound from '@/pages/NotFound';
 import Home from '@/pages/Home';
 import Products from '@/pages/Books';
-import Checkout from '@/pages/Checkout';
+import Checkout from '@/pages/AddNewBook';
 import Signup from '@/pages/Signup';
 import BookDetails from '@/pages/BookDetails';
 
@@ -26,7 +26,7 @@ const routes = createBrowserRouter([
         element: <BookDetails />,
       },
       {
-        path: '/checkout',
+        path: '/add-book',
         element: <Checkout />,
       },
     ],
