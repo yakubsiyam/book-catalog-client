@@ -1,4 +1,4 @@
-import ProductReview from '@/components/ProductReview';
+import BookReview from '@/components/BookReview';
 // import { Button } from '@/components/ui/button';
 import { useSingleBookQuery } from '@/redux/features/books/bookApi';
 // import { IProduct } from '@/types/globalTypes';
@@ -24,7 +24,7 @@ export default function BookDetails() {
           <p className="text-xl">Publication Date: {book?.publicationDate}</p>
         </div>
       </div>
-      <ProductReview id={id!} />
+      <BookReview id={id!} />
     </>
   );
 }
