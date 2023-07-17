@@ -1,8 +1,5 @@
 import BookReview from '@/components/BookReview';
-// import { Button } from '@/components/ui/button';
 import { useSingleBookQuery } from '@/redux/features/books/bookApi';
-// import { IProduct } from '@/types/globalTypes';
-// import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import bookDummy from '@/assets/images/bookDummy.jpg';
 
