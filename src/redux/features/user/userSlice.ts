@@ -36,7 +36,6 @@ export const createUser = createAsyncThunk(
   'user/createUser',
   async ({ email, password }: ICredential) => {
     const data = await createUserWithEmailAndPassword(auth, email, password);
-    console.log(data, 'ami create user data');
     return data.user.email;
   }
 );
@@ -45,7 +44,6 @@ export const loginUser = createAsyncThunk(
   'user/loginUser',
   async ({ email, password }: ICredential) => {
     const data = await signInWithEmailAndPassword(auth, email, password);
-    console.log(data, 'ami login data');
     return data.user.email;
   }
 );
