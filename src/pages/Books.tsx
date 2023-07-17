@@ -4,6 +4,7 @@ import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 // import { useToast } from '@/components/ui/use-toast';
 import { useGetBooksQuery } from '@/redux/features/books/bookApi';
+import { useAppSelector } from '@/redux/hook';
 import { IBook } from '@/types/globalTypes';
 import { Link } from 'react-router-dom';
 // import { IProduct } from '@/types/globalTypes';
@@ -27,13 +28,14 @@ export default function Books() {
   // //! **
 
   const { isLoading, error, data } = useGetBooksQuery(undefined);
-  console.log(data);
 
   const handleSlider = (value: number[]) => {
     console.log(value);
   };
 
   const booksData = data?.data;
+
+  const { user } = useAppSelector((state) => state.user);
 
   // if (status) {
   //   productsData = data.filter(
@@ -47,11 +49,13 @@ export default function Books() {
 
   return (
     <div className="max-w-7xl mx-auto relative">
-      <Link to="/add-book">
-        <button className="mt-3 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-5">
-          Add Your Book
-        </button>
-      </Link>
+      {user?.email && (
+        <Link to="/add-book">
+          <button className="mt-5 w-1/7 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-5">
+            Add Your Book
+          </button>
+        </Link>
+      )}
       <div className="grid grid-cols-12 ">
         <div className="col-span-3 z mr-10 space-y-5 border rounded-2xl border-gray-200/80 p-5 self-start sticky top-16 h-[calc(100vh-80px)]">
           <div>

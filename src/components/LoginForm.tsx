@@ -27,7 +27,6 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
   } = useForm<LoginFormInputs>();
 
   const { user, isLoading } = useAppSelector((state) => state.user);
-  console.log(user, 'ami login user');
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();

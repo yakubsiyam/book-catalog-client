@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 // import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { useAddNewBookMutation } from '@/redux/features/books/bookApi';
+import { useAppSelector } from '@/redux/hook';
 // import { IProduct } from '@/types/globalTypes';
 
 import { ChangeEvent, FormEvent, useState } from 'react';
@@ -44,6 +45,8 @@ export default function AddNewBook() {
 
   console.log(isLoading, isError, isSuccess);
 
+  const { user } = useAppSelector((state) => state.user);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -53,6 +56,7 @@ export default function AddNewBook() {
       genre: genre,
       publicationDate: publicationDate,
       img: img,
+      userEmail: user?.email,
     };
 
     console.log(options);

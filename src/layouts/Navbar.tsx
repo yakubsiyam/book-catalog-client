@@ -57,13 +57,20 @@ export default function Navbar() {
                   </li>
                 </>
               ) : (
-                <li>
-                  <Button variant="link" asChild>
-                    <Link onClick={handleLogout} to="">
-                      Logout
-                    </Link>
-                  </Button>
-                </li>
+                <>
+                  <li>
+                    <Button variant="link" asChild>
+                      <Link to="/dashboard">Dashboard</Link>
+                    </Button>
+                  </li>
+                  <li>
+                    <Button variant="link" asChild>
+                      <Link onClick={handleLogout} to="">
+                        Logout
+                      </Link>
+                    </Button>
+                  </li>
+                </>
               )}
             </ul>
           </div>
