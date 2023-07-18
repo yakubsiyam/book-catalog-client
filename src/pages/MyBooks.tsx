@@ -6,7 +6,10 @@ import MyBooksRow from './MyBooksRow';
 const MyBooks = () => {
   const { user, isLoading } = useAppSelector((state) => state.user);
 
-  const { data } = useGetMyAllBooksQuery(user?.email);
+  const { data } = useGetMyAllBooksQuery(user?.email, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 30000,
+  });
   const books = data?.data;
 
   return (

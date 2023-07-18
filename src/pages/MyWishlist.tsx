@@ -6,7 +6,7 @@ import MyWishlistRow from './MyWishlistRow';
 const MyWishlist = () => {
   const { user, isLoading } = useAppSelector((state) => state.user);
 
-  const { data } = useGetMyAllWishlistQuery(user?.email);
+  const { data } = useGetMyAllWishlistQuery(user?.email, { refetchOnMountOrArgChange: true, pollingInterval: 30000, });
   const books = data?.data;
 
   return (
