@@ -4,9 +4,11 @@ const bookApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getBooks: builder.query({
       query: () => '/book',
+      providesTags: ['addBook'],
     }),
     getMyAllBooks: builder.query({
       query: (userEmail) => `/book/my-book/${userEmail}`,
+      providesTags: ['addBook'],
     }),
     singleBook: builder.query({
       query: (id) => `/book/${id}`,
@@ -18,6 +20,13 @@ const bookApi = api.injectEndpoints({
         body: data,
       }),
       invalidatesTags: ['addBook'],
+    }),
+    deleteBook: builder.mutation({
+      query: (id) => ({
+        url: `/book/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['deleteBook'],
     }),
     postComment: builder.mutation({
       query: ({ id, data }) => ({
@@ -31,6 +40,18 @@ const bookApi = api.injectEndpoints({
       query: (id) => `book/comment/${id}`,
       providesTags: ['comments'],
     }),
+    addNewWishlist: builder.mutation({
+      query: (data) => ({
+        url: `/wishlist`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['addWishlist'],
+    }),
+    getMyAllWishlist: builder.query({
+      query: (userEmail) => `/wishlist/${userEmail}`,
+      providesTags: ['addWishlist'],
+    }),
   }),
 });
 
@@ -41,4 +62,6 @@ export const {
   useGetCommentQuery,
   useAddNewBookMutation,
   useGetMyAllBooksQuery,
+  useAddNewWishlistMutation,
+  useGetMyAllWishlistQuery,
 } = bookApi;

@@ -1,17 +1,17 @@
-import { useGetMyAllBooksQuery } from '@/redux/features/books/bookApi';
+import { useGetMyAllWishlistQuery } from '@/redux/features/books/bookApi';
 import { useAppSelector } from '@/redux/hook';
 import { IBook } from '@/types/globalTypes';
-import MyBooksRow from './MyBooksRow';
+import MyWishlistRow from './MyWishlistRow';
 
-const MyBooks = () => {
+const MyWishlist = () => {
   const { user, isLoading } = useAppSelector((state) => state.user);
 
-  const { data } = useGetMyAllBooksQuery(user?.email);
+  const { data } = useGetMyAllWishlistQuery(user?.email);
   const books = data?.data;
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <h1 className="text-center mb-3 text-2xl font-bold">My Books Table</h1>
+      <h1 className="text-center mb-3 text-2xl font-bold">My WishList Table</h1>
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -25,13 +25,13 @@ const MyBooks = () => {
               Genre
             </th>
             <th scope="col" className="px-6 py-3">
-              Action
+              Publication Date
             </th>
           </tr>
         </thead>
         <tbody>
           {books?.map((book: IBook) => (
-            <MyBooksRow book={book} key={book?._id} />
+            <MyWishlistRow book={book} key={book?._id} />
           ))}
         </tbody>
       </table>
@@ -39,4 +39,4 @@ const MyBooks = () => {
   );
 };
 
-export default MyBooks;
+export default MyWishlist;

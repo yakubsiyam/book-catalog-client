@@ -4,17 +4,28 @@ import { Link } from 'react-router-dom';
 import { IBook } from '@/types/globalTypes';
 import bookDummy from '@/assets/images/bookDummy.jpg';
 import { useAppSelector } from '@/redux/hook';
+import { useAddNewWishlistMutation } from '@/redux/features/wishlist/wishlistApi';
 
 interface IProps {
   book: IBook;
 }
 
 export default function BookCard({ book }: IProps) {
+  const [addNewWishlist, { isLoading, isError }] = useAddNewWishlistMutation();
+
   const handleAddBookWishlist = (book: IBook) => {
+    const options = {
+      book: book?._id,
+      userEmail: user?.email,
+    };
+
+    addNewWishlist(options);
+
     toast({
       description: 'Book Added Your Wishlist',
     });
   };
+  console.log(isError);
 
   const { user } = useAppSelector((state) => state.user);
 

@@ -1,12 +1,21 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { useAddNewBookMutation } from '@/redux/features/books/bookApi';
+import {
+  useAddNewBookMutation,
+  useSingleBookQuery,
+} from '@/redux/features/books/bookApi';
 import { useAppSelector } from '@/redux/hook';
 
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-export default function AddNewBook() {
+export default function EditBook() {
+  const { id } = useParams();
+
+  const { data, error } = useSingleBookQuery(id);
+  const book = data?.data;
+
   const [title, setTitle] = useState<string>('');
   const [genre, setGenre] = useState<string>('');
   const [author, setAuthor] = useState<string>('');
@@ -14,7 +23,7 @@ export default function AddNewBook() {
   const [img, setImg] = useState<string>('');
 
   const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
+    setTitle({ ...book, title: event.target.value });
   };
 
   const handleAuthorChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +77,7 @@ export default function AddNewBook() {
     <div className="flex justify-center items-center h-[calc(100vh-80px)] gap-10 text-primary">
       <div className="max-w-lg w-full"></div>
       <div className="max-w-3xl w-full">
-        <h1 className="text-3xl mb-2 text-center">Add a New Book</h1>
+        <h1 className="text-3xl mb-2 text-center">Edit Book</h1>
         <form
           onSubmit={handleSubmit}
           className="h-[50vh] border border-gray-300 rounded-md p-10 overflow-auto"
@@ -79,7 +88,7 @@ export default function AddNewBook() {
                 <Label htmlFor="name">Title</Label>
                 <Input
                   onChange={handleTitleChange}
-                  value={title}
+                  value={book.title}
                   type="text"
                   id="name"
                   className="mt-2"
@@ -129,7 +138,7 @@ export default function AddNewBook() {
             />
           </div>
           <button className="mt-3 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Add Your Book
+            Edit Your Book
           </button>
         </form>
       </div>

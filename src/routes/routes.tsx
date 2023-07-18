@@ -7,7 +7,9 @@ import Products from '@/pages/Books';
 import Checkout from '@/pages/AddNewBook';
 import Signup from '@/pages/Signup';
 import BookDetails from '@/pages/BookDetails';
-import Dashboard from '@/pages/Dashboard';
+import EditBook from '@/pages/EditBook';
+import BookDashboard from '@/pages/BookDashboard';
+import MyWishlistDashBoard from '@/pages/MyWishlistDashBoard';
 
 const routes = createBrowserRouter([
   {
@@ -32,7 +34,15 @@ const routes = createBrowserRouter([
       },
       {
         path: '/dashboard',
-        element: <Dashboard />,
+        element: <BookDashboard />,
+      },
+      {
+        path: '/dashboard/my-wishlist',
+        element: <MyWishlistDashBoard />,
+      },
+      {
+        path: '/edit-book/:id',
+        element: <EditBook />,
       },
     ],
   },

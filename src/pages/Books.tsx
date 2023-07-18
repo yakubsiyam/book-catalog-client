@@ -2,32 +2,16 @@ import ProductCard from '@/components/BookCard';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
-// import { useToast } from '@/components/ui/use-toast';
 import { useGetBooksQuery } from '@/redux/features/books/bookApi';
 import { useAppSelector } from '@/redux/hook';
 import { IBook } from '@/types/globalTypes';
 import { Link } from 'react-router-dom';
-// import { IProduct } from '@/types/globalTypes';
-// import { useEffect, useState } from 'react';
 
 export default function Books() {
-  // const [data, setData] = useState<IProduct[]>([]);
-  // useEffect(() => {
-  //   fetch('./data.json')
-  //     .then((res) => res.json())
-  //     .then((data) => setData(data));
-  // }, []);
-
-  // const { toast } = useToast();
-
-  // //! Dummy Data
-
-  // const status = true;
-  // const priceRange = 100;
-
-  // //! **
-
-  const { isLoading, error, data } = useGetBooksQuery(undefined);
+  const { isLoading, error, data } = useGetBooksQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 30000,
+  });
 
   const handleSlider = (value: number[]) => {
     console.log(value);
@@ -36,16 +20,6 @@ export default function Books() {
   const booksData = data?.data;
 
   const { user } = useAppSelector((state) => state.user);
-
-  // if (status) {
-  //   productsData = data.filter(
-  //     (item) => item.status === true && item.price < priceRange
-  //   );
-  // } else if (priceRange > 0) {
-  //   productsData = data.filter((item) => item.price < priceRange);
-  // } else {
-  //   productsData = data;
-  // }
 
   return (
     <div className="max-w-7xl mx-auto relative">
