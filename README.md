@@ -4,7 +4,7 @@
 
 https://book-catalog-client.web.app/
 
-## Book Catalog Client Link
+## Book Catalog Client Github Link
 
 https://github.com/yakubsiyam/book-catalog-client
 
