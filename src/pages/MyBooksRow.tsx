@@ -1,7 +1,22 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useDeleteBookMutation } from '@/redux/features/books/bookApi';
 import { Link } from 'react-router-dom';
 
 const MyBooksRow = ({ book }) => {
   const { title, author, genre, _id } = book;
+
+  const [deleteBook, { isError, isLoading, isSuccess }] =
+    useDeleteBookMutation();
+
+  const handleDelete = async () => {
+    try {
+      console.log('id', _id);
+      await deleteBook(_id);
+    } catch (error) {
+      console.error('Failed to delete book:', error);
+    }
+  };
+
   return (
     <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
       <th
@@ -19,6 +34,12 @@ const MyBooksRow = ({ book }) => {
         >
           Edit
         </Link>
+        <button
+          onClick={handleDelete}
+          className="font-medium text-red-600 dark:text-blue-500 hover:underline ml-3"
+        >
+          Delete
+        </button>
       </td>
     </tr>
   );

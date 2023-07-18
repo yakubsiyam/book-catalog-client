@@ -26,7 +26,7 @@ const bookApi = api.injectEndpoints({
         url: `/book/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['deleteBook'],
+      invalidatesTags: ['addBook'],
     }),
     postComment: builder.mutation({
       query: ({ id, data }) => ({
@@ -64,4 +64,5 @@ export const {
   useGetMyAllBooksQuery,
   useAddNewWishlistMutation,
   useGetMyAllWishlistQuery,
+  useDeleteBookMutation,
 } = bookApi;

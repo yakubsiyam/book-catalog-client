@@ -1,7 +1,7 @@
 import BookReview from '@/components/BookReview';
-import { useSingleBookQuery } from '@/redux/features/books/bookApi';
 import { useParams } from 'react-router-dom';
 import bookDummy from '@/assets/images/bookDummy.jpg';
+import { useSingleBookQuery } from '@/redux/features/books/bookApi';
 
 export default function BookDetails() {
   const { id } = useParams();

@@ -1,77 +1,45 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  useAddNewBookMutation,
-  useSingleBookQuery,
-} from '@/redux/features/books/bookApi';
-import { useAppSelector } from '@/redux/hook';
-
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { useSingleBookQuery } from '@/redux/features/books/bookApi';
+import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+
+export type CreateBookFormValues = {
+  [x: string]: any;
+  title: string;
+  author: string;
+  genre: string;
+  publicationDate: string;
+  img?: string;
+  _id: string;
+};
 
 export default function EditBook() {
   const { id } = useParams();
+  console.log(id);
 
   const { data, error } = useSingleBookQuery(id);
+  console.log(data);
   const book = data?.data;
 
-  const [title, setTitle] = useState<string>('');
-  const [genre, setGenre] = useState<string>('');
-  const [author, setAuthor] = useState<string>('');
-  const [publicationDate, setPublicationDate] = useState<string>('');
-  const [img, setImg] = useState<string>('');
+  console.log(book);
 
-  const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTitle({ ...book, title: event.target.value });
-  };
+  const { register, handleSubmit } = useForm();
 
-  const handleAuthorChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setAuthor(event.target.value);
-  };
+  // const onSubmit = async (bookData: CreateBookFormValues) => {
+  //   console.log(bookData);
+  //   //   try {
+  //   //     const response = await updateBook({ id, bookData }).unwrap();
+  //   //     console.log(response.message);
+  //   //     handleClose();
+  //   //   } catch (error: any) {
+  //   //     // console.error(error?.data?.message);
+  //   //     setError(error?.data?.message);
+  //   //   }
+  // };
 
-  const handleGenreChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setGenre(event.target.value);
-  };
-
-  const handlePublicationDateChange = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    setPublicationDate(event.target.value);
-  };
-
-  const handleImgChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setImg(event.target.value);
-  };
-
-  const [postNewBook, { isLoading, isError, isSuccess }] =
-    useAddNewBookMutation();
-
-  console.log(isLoading, isError, isSuccess);
-
-  const { user } = useAppSelector((state) => state.user);
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const options = {
-      title: title,
-      author: author,
-      genre: genre,
-      publicationDate: publicationDate,
-      img: img,
-      userEmail: user?.email,
-    };
-
-    console.log(options);
-
-    postNewBook(options);
-    setTitle('');
-    setAuthor('');
-    setGenre('');
-    setPublicationDate('');
-    setImg('');
-  };
+  console.log(register);
 
   return (
     <div className="flex justify-center items-center h-[calc(100vh-80px)] gap-10 text-primary">
@@ -79,7 +47,7 @@ export default function EditBook() {
       <div className="max-w-3xl w-full">
         <h1 className="text-3xl mb-2 text-center">Edit Book</h1>
         <form
-          onSubmit={handleSubmit}
+          // onSubmit={handleSubmit(onSubmit)}
           className="h-[50vh] border border-gray-300 rounded-md p-10 overflow-auto"
         >
           <div className="flex gap-5">
@@ -87,21 +55,21 @@ export default function EditBook() {
               <div>
                 <Label htmlFor="name">Title</Label>
                 <Input
-                  onChange={handleTitleChange}
-                  value={book.title}
+                  defaultValue={book.title}
                   type="text"
                   id="name"
                   className="mt-2"
+                  {...register('title')}
                 />
               </div>
               <div>
                 <Label htmlFor="name">Author</Label>
                 <Input
-                  onChange={handleAuthorChange}
-                  value={author}
+                  defaultValue={book.author}
                   type="text"
                   id="name"
                   className="mt-2"
+                  {...register('author')}
                 />
               </div>
             </div>
@@ -109,21 +77,21 @@ export default function EditBook() {
               <div>
                 <Label htmlFor="name">Genre</Label>
                 <Input
-                  onChange={handleGenreChange}
-                  value={genre}
+                  defaultValue={book.genre}
                   type="text"
                   id="name"
                   className="mt-2"
+                  {...register('genre')}
                 />
               </div>
               <div>
                 <Label htmlFor="name">Publication Date</Label>
                 <Input
-                  onChange={handlePublicationDateChange}
-                  value={publicationDate}
+                  defaultValue={book.publicationDate}
                   type="text"
                   id="name"
                   className="mt-2"
+                  {...register('publicationDate')}
                 />
               </div>
             </div>
@@ -131,10 +99,10 @@ export default function EditBook() {
           <div className="mt-5">
             <Label htmlFor="name">Image Link</Label>
             <Textarea
-              onChange={handleImgChange}
-              value={img}
+              defaultValue={book.img}
               id="name"
               className="mt-2"
+              {...register('img')}
             />
           </div>
           <button className="mt-3 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">

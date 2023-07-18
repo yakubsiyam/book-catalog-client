@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom';
-
 const MyWishlistRow = ({ book }) => {
+  console.log(book.book);
   const { title, author, genre, publicationDate } = book.book;
   return (
     <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
