@@ -25,7 +25,6 @@ export default function BookCard({ book }: IProps) {
       description: 'Book Added Your Wishlist',
     });
   };
-  console.log(isError);
 
   const { user } = useAppSelector((state) => state.user);
 

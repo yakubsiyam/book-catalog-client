@@ -6,6 +6,11 @@ const bookApi = api.injectEndpoints({
       query: () => '/book',
       providesTags: ['addBook'],
     }),
+    //* get searched book
+    getSearchedBook: builder.query({
+      query: (data) => `/book?searchTerm=${data}`,
+      providesTags: ['addBook'],
+    }),
     getMyAllBooks: builder.query({
       query: (userEmail) => `/book/my-book/${userEmail}`,
       providesTags: ['addBook'],
@@ -65,4 +70,5 @@ export const {
   useAddNewWishlistMutation,
   useGetMyAllWishlistQuery,
   useDeleteBookMutation,
+  useGetSearchedBookQuery,
 } = bookApi;

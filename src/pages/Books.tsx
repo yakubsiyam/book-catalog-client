@@ -1,23 +1,24 @@
 import ProductCard from '@/components/BookCard';
-import { Label } from '@/components/ui/label';
-import { Slider } from '@/components/ui/slider';
-import { Switch } from '@/components/ui/switch';
-import { useGetBooksQuery } from '@/redux/features/books/bookApi';
+import { useGetSearchedBookQuery } from '@/redux/features/books/bookApi';
 import { useAppSelector } from '@/redux/hook';
 import { IBook } from '@/types/globalTypes';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Books() {
-  const { isLoading, error, data } = useGetBooksQuery(undefined, {
+  const [search, setSearch] = useState('');
+  const [bookData, setBookData] = useState([]);
+
+  // For searching
+  const { data } = useGetSearchedBookQuery(search, {
     refetchOnMountOrArgChange: true,
-    pollingInterval: 30000,
+    pollingInterval: 3000,
   });
 
-  const handleSlider = (value: number[]) => {
-    console.log(value);
-  };
-
-  const booksData = data?.data;
+  useEffect(() => {
+    console.log('all books data', data);
+    setBookData(data?.data);
+  }, [data]);
 
   const { user } = useAppSelector((state) => state.user);
 
@@ -33,28 +34,50 @@ export default function Books() {
       <div className="grid grid-cols-12 ">
         <div className="col-span-3 z mr-10 space-y-5 border rounded-2xl border-gray-200/80 p-5 self-start sticky top-16 h-[calc(100vh-80px)]">
           <div>
-            <h1 className="text-2xl uppercase">Availability</h1>
+            <h1 className="text-2xl uppercase">Search And Filter</h1>
             <div className="flex items-center space-x-2 mt-3">
-              <Switch id="in-stock" />
-              <Label htmlFor="in-stock">In stock</Label>
+              <form>
+                <label
+                  htmlFor="default-search"
+                  className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+                >
+                  Search
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg
+                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    onChange={(e) => {
+                      setSearch(e.target.value);
+                    }}
+                    type="search"
+                    id="default-search"
+                    className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search"
+                    required
+                  />
+                </div>
+              </form>
             </div>
-          </div>
-          <div className="space-y-3 ">
-            <h1 className="text-2xl uppercase">Price Range</h1>
-            <div className="max-w-xl">
-              <Slider
-                defaultValue={[150]}
-                max={150}
-                min={0}
-                step={1}
-                onValueChange={(value) => handleSlider(value)}
-              />
-            </div>
-            {/* <div>From 0$ To {priceRange}$</div> */}
           </div>
         </div>
         <div className="col-span-9 grid grid-cols-3 gap-10 pb-20">
-          {booksData?.map((book: IBook) => (
+          {bookData?.map((book: IBook) => (
             <ProductCard book={book} key={book._id} />
           ))}
         </div>
