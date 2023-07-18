@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useDeleteBookMutation } from '@/redux/features/books/bookApi';
+import { IBook } from '@/types/globalTypes';
 import { Link } from 'react-router-dom';
 
-const MyBooksRow = ({ book }) => {
+const MyBooksRow = ({ book }: any) => {
   const { title, author, genre, _id } = book;
 
   const [deleteBook, { isError, isLoading, isSuccess }] =

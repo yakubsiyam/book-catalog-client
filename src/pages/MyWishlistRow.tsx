@@ -1,4 +1,4 @@
-const MyWishlistRow = ({ book }) => {
+const MyWishlistRow = ({ book }: any) => {
   console.log(book.book);
   const { title, author, genre, publicationDate } = book.book;
   return (
