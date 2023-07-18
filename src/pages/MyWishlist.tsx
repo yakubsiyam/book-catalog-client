@@ -1,13 +1,16 @@
-
 import { useAppSelector } from '@/redux/hook';
 import { IBook } from '@/types/globalTypes';
 import MyWishlistRow from './MyWishlistRow';
 import { useGetMyAllWishlistQuery } from '@/redux/features/books/bookApi';
+import Loader from '@/shared/Loader';
 
 const MyWishlist = () => {
   const { user, isLoading } = useAppSelector((state) => state.user);
 
-  const { data } = useGetMyAllWishlistQuery(user?.email, { refetchOnMountOrArgChange: true, pollingInterval: 30000, });
+  const { data } = useGetMyAllWishlistQuery(user?.email, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 30000,
+  });
   const books = data?.data;
 
   return (
@@ -31,6 +34,7 @@ const MyWishlist = () => {
           </tr>
         </thead>
         <tbody>
+          {isLoading && <Loader />}
           {books?.map((book: IBook) => (
             <MyWishlistRow book={book} key={book?._id} />
           ))}

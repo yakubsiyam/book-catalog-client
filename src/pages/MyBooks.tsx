@@ -2,6 +2,7 @@ import { useAppSelector } from '@/redux/hook';
 import { IBook } from '@/types/globalTypes';
 import MyBooksRow from './MyBooksRow';
 import { useGetMyAllBooksQuery } from '@/redux/features/books/bookApi';
+import Loader from '@/shared/Loader';
 
 const MyBooks = () => {
   const { user, isLoading } = useAppSelector((state) => state.user);
@@ -33,6 +34,7 @@ const MyBooks = () => {
           </tr>
         </thead>
         <tbody>
+          {isLoading && <Loader />}
           {books?.map((book: IBook) => (
             <MyBooksRow book={book} key={book?._id} />
           ))}

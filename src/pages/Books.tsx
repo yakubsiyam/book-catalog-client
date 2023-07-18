@@ -1,6 +1,7 @@
 import ProductCard from '@/components/BookCard';
 import { useGetSearchedBookQuery } from '@/redux/features/books/bookApi';
 import { useAppSelector } from '@/redux/hook';
+import Loader from '@/shared/Loader';
 import { IBook } from '@/types/globalTypes';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -10,7 +11,7 @@ export default function Books() {
   const [bookData, setBookData] = useState([]);
 
   // For searching
-  const { data } = useGetSearchedBookQuery(search, {
+  const { data, isLoading } = useGetSearchedBookQuery(search, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 3000,
   });
@@ -24,6 +25,7 @@ export default function Books() {
 
   return (
     <div className="max-w-7xl mx-auto relative">
+      {isLoading && <Loader />}
       {user?.email && (
         <Link to="/add-book">
           <button className="mt-5 w-1/7 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-5">

@@ -4,6 +4,7 @@ import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { useGetBooksQuery } from '@/redux/features/books/bookApi';
 import { useAppSelector } from '@/redux/hook';
+import Loader from '@/shared/Loader';
 import { IBook } from '@/types/globalTypes';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -14,9 +15,9 @@ export default function NewTenBooks() {
     pollingInterval: 30000,
   });
 
-  const handleSlider = (value: number[]) => {
-    console.log(value);
-  };
+  if (isLoading) {
+    <Loader />;
+  }
 
   const booksData = data?.data;
 
@@ -27,6 +28,7 @@ export default function NewTenBooks() {
 
   return (
     <div className="grid grid-cols-4 gap-10 pb-20">
+      {isLoading && <Loader />}
       {firstTenBooks?.map((book: IBook) => (
         <ProductCard book={book} key={book._id} />
       ))}
