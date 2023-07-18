@@ -3,6 +3,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useAddNewBookMutation } from '@/redux/features/books/bookApi';
 import { useAppSelector } from '@/redux/hook';
+import addBook from '@/assets/images/addBook.jpg';
 
 import { ChangeEvent, FormEvent, useState } from 'react';
 
@@ -66,7 +67,9 @@ export default function AddNewBook() {
 
   return (
     <div className="flex justify-center items-center h-[calc(100vh-80px)] gap-10 text-primary">
-      <div className="max-w-lg w-full"></div>
+      <div className="max-w-lg w-full">
+        <img src={addBook} alt="add Image book" />
+      </div>
       <div className="max-w-3xl w-full">
         <h1 className="text-3xl mb-2 text-center">Add a New Book</h1>
         <form
